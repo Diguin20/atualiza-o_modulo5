@@ -1,0 +1,33 @@
+<section class="section-form">
+    <h2 class="title_align_center">Nova Transação</h2>
+    <div class="section-form__div">
+        <legend id="legend" class="form__title title_align_center">Receita</legend>
+
+        <form action="/transactions/create" method="post" class="form">
+            <div class="form-control form-control-radio">
+                <input type="radio" name="transaction_type" value="income" id="income_form_home" onclick="changeTitle()"
+                    checked>
+                <label class="form-control__label" for="income_form_home">Receita</label>
+
+                <input type="radio" name="transaction_type" value="expense" id="expense_form_home"
+                    onclick="changeTitle()">
+                <label class="form-control__label" for="expense_form_home">Despesa</label>
+            </div>
+
+            <div class="form-control">
+                <label class="form-control__label" for="description_form_home">Descrição:</label>
+                <input class="form-control__input" type="text" name="description" id="description_form_home"
+                    data-max-length="20" data-required data-min-length="3">
+            </div>
+
+            <div class="form-control">
+                <label class="form-control__label" for="amount_form_home">Valor:</label>
+                <input class="form-control__input" class="form-control__label" type="text" name="amount"
+                    id="amount_form_home" data-required data-max-length="20">
+            </div>
+
+            <button class="form__btn button" id="btnsubmit" type="submit">Adicionar</button>
+        </form>
+        <span class="section-form__error section-form__error_display">Error</span>
+    </div>
+</section>

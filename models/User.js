@@ -1,27 +1,43 @@
-const Sequelize= require('sequelize')
-const db= require('../db/conn')
+const { DataTypes, Sequelize } = require('sequelize')
+const db = require("../db/conn")
 
-const User= db.define('usuarios', {
-    id:{
-        type:Sequelize.INTEGER,
-        autoIncrement:true,
-        allownull:false,
-        primaryKey:true
+const User = db.define('User', {
+    name:{
+        type: DataTypes.STRING,
+        allowNull:false,
     },
-    nome:{
-        type: Sequelize.STRING,
-        allownull:false
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: 'Digite o email'
+            },
+            isEmail: {
+                args: [ true ],
+                msg: `O email deve ser no formato "exemplo@email.com"`
+            }
+        }
     },
-    email:{
-        type:Sequelize.STRING,
-        allownull:false,
-    },
-    senha:{
-        type:Sequelize.STRING,
-        allownull:false,
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: 'Digite a senha'
+            },//porque ter limite de senha?
+            min: {
+                args: [ 6 ],
+                msg: 'O mínimo é de 6 caracteres'
+            },
+            max: {
+                args: [ 20 ],
+                msg: 'O máximo é de 20 caracteres'
+            }
+        }
     }
-})
+},
+)
 
-User.sync()
 
 module.exports = User

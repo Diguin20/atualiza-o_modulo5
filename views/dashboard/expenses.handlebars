@@ -1,0 +1,54 @@
+<h1 class="title_align_center">Despesas</h1>
+
+<section class="section-card-small">
+    <div class="card-small">
+        <p class="section-cards__value">R$ <span>{{cardExpenses}}</span></p>
+    </div>
+</section>
+
+<table class="table">
+    <caption class="table__caption title_align_center">Últimas Transações</caption>
+
+    <thead class="table__block_width t-head">
+        <tr class="row">
+            <th>Tipo</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+        </tr>
+    </thead>
+
+    <tbody class="table__block_width t-body">
+
+        {{#each historic}}
+        <tr class="row tbody-row">
+            {{#if transaction_type}}
+            <td class="tbody-row__type">
+                <i class="icon_color_green fa-solid fa-arrow-trend-up">
+            </td>
+            {{else}}
+            <td class="tbody-row__type">
+                <i class="icon_color_red fa-solid fa-arrow-trend-down"></i>
+            </td>
+            {{/if}}
+
+            <td class="tbody-row__description">{{description}}</td>
+            <td class="tbody-row__value">{{amount}}</td>
+
+            <td>
+                <form action="/transactions/edit/{{id}}" method="post">
+                    <input type="hidden" name="id" value="{{id}}">
+                    <button class="button" type="submit"><i
+                            class="tbody-row__icon icon-pen fa-solid fa-pen-to-square"></i></button>
+                </form>
+            </td>
+            <td>
+                <form action="/transactions/delete/{{id}}" method="post">
+                    <input type="hidden" name="id" value="{{id}}">
+                    <button class="button" type="submit"><i
+                            class="tbody-row__icon icon-trash fa-solid fa-trash"></i></button>
+                </form>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

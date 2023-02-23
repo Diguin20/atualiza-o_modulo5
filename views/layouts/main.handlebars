@@ -1,12 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/styles.css">
+    <!--<script src="/js/validations.js" defer></script>-->
+    <script src="/js/scripts.js" defer></script>
     <title>Document</title>
 </head>
+
 <body>
-    {{{body}}}
+    <div class="container-body">
+        <header class="header">
+            <nav>
+                <div class="icons-menu">
+                    <a class="icons-menu__link" href="/transactions/dashboard"><i class="fa-solid fa-house"></i></a>
+                    <a class="icons-menu__link" href="/transactions/incomes"><i class="fa-solid fa-arrow-up-short-wide"></i></a>
+                    <a class="icons-menu__link" href="/transactions/expenses"><i class="fa-solid fa-arrow-down-short-wide"></i></a>
+                    <a class="icons-menu__link" href="/transactions/create"><i class="fa-solid fa-plus"></i></a>
+                    <a class="icons-menu__link" href="/transactions/historic"><i class="fa-solid fa-receipt"></i></a>
+                    <a class="icons-menu__link" href=""><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                </div>
+                <ul class="list">
+                    <li><a class="list__link link" href="/transactions/dashboard">Home</a></li>
+                    <li><a class="list__link link" href="/transactions/incomes">Receitas</a></li>
+                    <li><a class="list__link link" href="/transactions/expenses">Despesas</a></li>
+                    <li><a class="list__link link" href="/transactions/create">Nova Transação</a></li>
+                    <li><a class="list__link link" href="/transactions/historic">Histórico</a></li>
+                    <li><a class="list__link link" href="">Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <div class="container-main">
+                {{#if message}}
+                <div class="messages">
+                    <div>
+                        {{message}}
+                    </div>
+                </div>
+                {{/if}}
+                
+                {{{body}}}
+            </div>
+        </main>
+    </div>
 </body>
+
 </html>

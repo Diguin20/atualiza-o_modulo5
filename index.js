@@ -1,104 +1,56 @@
-const express= require('express')
-const app= express()
-const {engine} = require('express-handlebars')
+const express = require( 'express' )
+const { engine } = require( 'express-handlebars' )
+const session = require("express-session");
+const FileStore= require('session-file-store')(session)
 
-app.engine('handlebars', engine())
-app.set('view engine', 'handlebars')
-app.use(express.urlencoded({extended: true}))
-app.use(express.json())
-const bcrypt =require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const {eAdmin} = require('./middlwares/auth')
-const db= require('./db/conn')
-const User = require('./models/User')
+//models conexão com o banco de dados e tabelas
+const conn = require( './db/conn' )
+const User = require( './models/User' )
+const Transaction = require('./models/Transaction')
+
+//rotas
+const dashRouters = require('./routes/dashRouters')
+const authRouters = require('./routes/authRouters')
+
+const app = express()
+
+app.engine( 'handlebars', engine() )
+app.set( 'view engine', 'handlebars' )
+
+app.use( express.urlencoded( { extended: true } ) )
+
+app.use( express.json() )
+app.use(express.static('public'))
+
+app.use('/', authRouters)
+app.use('/transactions', dashRouters)
+
+//session middleware
+
+app.use(
+    session({
+      name: 'session',
+      secret: 'nosso_secret',
+      resave: false,
+      saveUninitialized: false,
+      store: new FileStore({
+        logFn: function () {},
+        path: require('path').join(require('os').tmpdir(), 'sessions'),
+      }),
+      cookie: {
+        secure: false,
+        maxAge: 3600000,
+        expires: new Date(Date.now() + 3600000),
+        httpOnly: true,
+      },
+    }),
+  )
 
 
-app.get('/', async (req,res)=>{
-    res.render('login')
+conn
+.sync()
+.then( () => {
+app.listen( 3000 )
+console.log('rodando...')
 })
-app.get('/home', async (req,res)=>{
-    res.render('home')
-})
-
-app.get('/cadastro', async(req,res)=>{
-    res.render('cadastro')
-})
-
-
-app.post('/cadastro', async(req,res)=>{
-    const senha = req.body.senha
-    const conf_senha= req.body.conf_senha
-    const email = req.body.email
-    const nome = req.body.nome
-
-    const senhacript=await bcrypt.hashSync(senha, 10)
-
-    const user = await User.findOne({
-        attributes:['id', 'nome', 'email', 'senha'],
-        where:{
-            email
-        }
-    })
-
-    if(senha!=conf_senha){
-        console.log('As senhas não conferem, tente novamente!')
-      return res.status(400)
-
-    }
-
-    if(user.email!=null){
-        console.log('usuario já possui cadastro')
-        return res.status(400)
-    }
-
-
-    const users_cad={
-        nome,
-        email,
-        senha: senhacript
-    }
-    await User.create(users_cad)
-
-    return res.render('login')
-})
-
-
-app.post('/login', async(req,res)=>{
-    const senha = req.body.senha
-    const email = req.body.email
-
-    const user = await User.findOne({
-        attributes:['id', 'nome', 'email', 'senha'],
-        where:{
-            email
-        }
-    })
-    if(user.email===null){
-        console.log('nenhum usuario com esse email')
-        return res.status(400)
-        
-    }
-
-    if(!(await bcrypt.compare(senha, user.senha ))){
-        console.log('usuario ou senha erradas')
-        return res.status(400)
-    }
-
-    var token= jwt.sign({id:user.id},"chave complexa para gerar e validar o token", {
-        expiresIn:600 //10 min
-    })
-
-    console.log(token)
-
-
-    return res.redirect('/home')
-})
-
-//app.get('/', eAdmin, async (req,res)=>{
-//    res.render('home')
-//} )
-
-app.listen(3000, ()=>{
-    console.log('iniciado com sucesso na porta 3000')
-})
-
+.catch( ( err ) => console.log( err ) )

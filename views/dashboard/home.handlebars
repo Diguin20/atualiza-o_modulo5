@@ -1,0 +1,74 @@
+<h1 class="title_align_center">Controle Financeiro</h1>
+<section class="section-cards">
+    <div class="section-cards__cards">
+        <p class="title-align-center">Receita</p>
+        <span class="section-cards__icon"><i class="icon_color_green fa-solid fa-arrow-trend-up"></i></span>
+        <p class="section-cards__value title_align_center">R$ <span>{{dataCards.incomes}}</span></p>
+    </div>
+
+    <div class="section-cards__cards">
+        <p class="title-align-center">Despesa</p>
+        <span class="section-cards__icon"><i class="icon_color_red fa-solid fa-arrow-trend-down"></i></span>
+        <p class="section-cards__value title_align_center">R$ <span>{{dataCards.expenses}}</span></p>
+    </div>
+
+    <div class="section-cards__cards">
+        <p class="title-align-center">Saldo</p>
+        <span class="section-cards__icon"><i class="icon_color_blue fa-solid fa-coins"></i></span>
+        <p class="section-cards__value title_align_center">R$ <span>{{dataCards.balance}}</span></p>
+    </div>
+</section>
+
+<section class="search">
+    <h2>Pesquise uma transação</h2>
+    <form action="/transactions/search" method="get" class="search-form">
+        <input class="form-control__input search-form__input" type="search" name="search" id="search" placeholder="Buscar por descrição...">
+        <button class="button search-form__btn" type="submit"><i class="search-form__icon fa-solid fa-magnifying-glass"></i></button>
+    </form>
+</section>
+
+<table class="table">
+    <caption class="table__caption title_align_center">Últimas Transações</caption>
+
+    <thead class="table__block_width t-head">
+        <tr class="row">
+            <th>Tipo</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+        </tr>
+    </thead>
+
+    <tbody class="table__block_width t-body">
+        {{#each historic}}
+        <tr class="row tbody-row">
+            {{#if transaction_type}}
+            <td class="tbody-row__type">
+                <i class="icon_color_green fa-solid fa-arrow-trend-up">
+            </td>
+            {{else}}
+            <td class="tbody-row__type">
+                <i class="icon_color_red fa-solid fa-arrow-trend-down"></i>
+            </td>
+            {{/if}}
+
+            <td class="tbody-row__description">{{description}}</td>
+            <td class="tbody-row__value">{{amount}}</td>
+
+            <td>
+                <form action="/transactions/edit/{{id}}" method="post">
+                    <input type="hidden" name="id" value="{{id}}">
+                    <button class="button" type="submit"><i
+                            class="tbody-row__icon icon-pen fa-solid fa-pen-to-square"></i></button>
+                </form>
+            </td>
+            <td>
+                <form action="/transactions/delete/{{id}}" method="post">
+                    <input type="hidden" name="id" value="{{id}}">
+                    <button class="button" type="submit"><i
+                            class="tbody-row__icon icon-trash fa-solid fa-trash"></i></button>
+                </form>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

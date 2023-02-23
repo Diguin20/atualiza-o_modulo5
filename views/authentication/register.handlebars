@@ -1,0 +1,33 @@
+<section class="section-form">
+    <h1 class="title_align_center">Cadastro</h1>
+
+    <div class="section-form__div">
+        <form class="form" action="/register" method="POST" class="form">
+            <div class="form-control">
+                <label class="form-control__label" for="name">Nome:</label>
+                <input class="form-control__input" type="text" name="name" id="name" placeholder="Digite o seu nome">
+            </div>
+
+            <div class="form-control">
+                <label class="form-control__label" for="email">Email:</label>
+                <input class="form-control__input" type="email" name="email" id="email"
+                    placeholder="Digite o seu email">
+            </div>
+
+            <div class="form-control">
+                <label class="form-control__label" for="password">Senha:</label>
+                <input class="form-control__input" type="password" name="password" id="password"
+                    placeholder="Digite sua senha">
+            </div>
+            <div class="form-control">
+                <label class="form-control__label" for="conf_password">confirme a sua senha:</label>
+                <input class="form-control__input" type="password" name="conf_password" id="password"
+                    placeholder="Digite sua senha novamente">
+            </div>
+
+            <button class="form__btn button" type="submit">Cadastrar</button>
+        </form>
+
+        <a class="section-form__link title_align_center link" href="/">Login</a>
+    </div>
+</section>

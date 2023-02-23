@@ -1,0 +1,24 @@
+<section class="section-form">
+    <h1 class="title_align_center">Login</h1>
+
+    <div class="section-form__div">
+        <form class="form" action="" method="POST" >
+            <div class="form-control">
+                <label class="form-control__label" for="email">Email:</label>
+                <input class="form-control__input" type="email" name="email" id="email" placeholder="Digite o seu email" data-required data-min-length="3" data-max-length="15">
+            </div>
+
+            <div class="form-control">
+                <label class="form-control__label" for="confirm-password">Senha:</label>
+                <input class="form-control__input" type="password" name='password' id="confirm-password" placeholder="Digite sua senha" data-required data-min-length="6" data-max-length="20">
+            </div>
+
+            <button class="form__btn button" type="submit">Logar</button>
+        </form>
+        
+        <a class="section-form__link title_align_center link" href="/register">Cadastre-se</a>
+
+        <span class="section-form__error section-form__error_display">Error</span>
+    </div>
+</section>
+
